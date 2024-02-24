@@ -1,8 +1,3 @@
-/*
- * File: 102-zombie.c
- * Auth: Brennan D Baraban
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -32,7 +27,7 @@ int main(void)
 {
 	pid_t pid;
 	char count = 0;
-OBOBOB
+
 	while (count < 5)
 	{
 		pid = fork();
