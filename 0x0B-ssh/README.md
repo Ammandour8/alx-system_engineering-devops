@@ -2,11 +2,11 @@
 **0x0B. SSH**
 
 ## Author's Details.
-Name: *Wendy Munyasi.*
+Name: *Ammandour8.*
 
-Email: *wendymunyasi@gmail.com*
+Email: *amrmandour51@gmail.com*
 
-Tel:*+254707240068.*
+Tel:*+2001275127658.*
 
 ##  Requirements
 
@@ -139,4 +139,4 @@ The advantage of using `#!/usr/bin/env` bash instead of `/bin/bash`.
 
 ## Collaborate
 
-To collaborate, reach me through my email address wendymunyasi@gmail.com.
+To collaborate, reach me through my email address amrmandour51@gmail.com.
