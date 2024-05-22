@@ -1,41 +1,38 @@
 #!/usr/bin/python3
-"Python script that exports data in CSV format"
-import requests
-import sys
+""" Script to get TODO list progress
+    by employee ID and save it to
+    CSV file
+"""
+from csv import writer, QUOTE_ALL
+from requests import get
+from sys import argv
 
 
-def tasks_done(id):
-    '''Script that exports an employee TODO tasks to a csv file
-        Parameters:
-        employee_id: Is an interger representing an employee id.
-    '''
+def todo_csv(emp_id):
+    """ Send request for employee's
+        to do list to API
+    """
+    file_name = '{}.csv'.format(emp_id)
+    url_user = 'https://jsonplaceholder.typicode.com/users/'
+    url_todo = 'https://jsonplaceholder.typicode.com/todos/'
 
-    url = "https://jsonplaceholder.typicode.com/users/{}".format(id)
-    response = requests.get(url)
-    response_json = response.json()
-    employee_name = response_json["name"]
+    # check if user exists
+    user = get(url_user + emp_id).json().get('username')
 
-    url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(id)
-    todos = requests.get(url)
-    todos_json = todos.json()
-    number_tasks = len(todos_json)
-
-    task_compleated = 0
-    task_list = ""
-
-    file_name = "{}.csv".format(id)
-
-    with open(file_name, "a") as fd:
-        for todo in todos_json:
-            completed = todo.get("completed")
-            title = todo.get("title")
-            csv_data = "\"{}\",\"{}\",\"{}\",\"{}\"\n".format(id,
-                                                              employee_name,
-                                                              completed,
-                                                              title
-                                                              )
-            fd.write(csv_data)
+    if user:
+        params = {'userId': emp_id}
+        #  get all tasks
+        tasks = get(url_todo, params=params).json()
+        if tasks:
+            #  open file in write mode and use csv writer to
+            #  writer content
+            with open(file_name, 'w', newline='', encoding='utf8') as f:
+                task_writer = writer(f, quoting=QUOTE_ALL)
+                for task in tasks:
+                    task_writer.writerow([emp_id, user, task.get('completed'),
+                                         task.get('title')])
 
 
-if __name__ == "__main__":
-    tasks_done(sys.argv[1])
+if __name__ == '__main__':
+    if len(argv) > 1:
+        todo_csv(argv[1])
